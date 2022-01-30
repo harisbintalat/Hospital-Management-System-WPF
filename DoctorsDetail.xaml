@@ -1,0 +1,74 @@
+﻿<Window x:Class="SemesterProject.DoctorsDetail" WindowStartupLocation="CenterScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SemesterProject"
+        mc:Ignorable="d"
+        Title="DoctorsDetail" Height="700" Width="1200">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="hospitalimg.jpeg"/>
+        </Grid.Background>
+        <Label x:Name="labelheading"  Content="Patient's Portal" HorizontalContentAlignment="Center" FontSize="48" FontWeight="Bold"  Foreground="white" FontFamily="Times New Roman" Background="#FF05003A" Height="102" VerticalAlignment="Top"/>
+        <Button Background="White" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Left" Width="68" Canvas.Left="361" Canvas.Top="63" Click="Button_back" Margin="30,18,0,604">
+            <Image Source="left-arrow.png" Width="53" Height="37"/>
+        </Button>
+        <Grid x:Name="outergrid" HorizontalAlignment="Left" Width="1192">
+            <ListBox x:Name="listboxnames" Margin="-1,154,891,0" ItemTemplate="{DynamicResource DataTemplate1}" HorizontalAlignment="Right" Width="302" Height="512" VerticalAlignment="Top" SelectionChanged="listboxnames_SelectionChanged">
+                <ListBox.Resources>
+                    <DataTemplate x:Key="DataTemplate1">
+                        <Grid Height="92" Width="268">
+                            <Label Content="{Binding DoctorName}"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="69,0,0,0" VerticalAlignment="Top" Height="56" Width="193" FontSize="20"/>
+                            <Label Content="{Binding DoctorSpec}"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="69,56,0,0" VerticalAlignment="Top" Height="36" Width="193" FontSize="16"/>
+                            <Ellipse Width="Auto" Height="Auto" Margin="16,28,217,29" >
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="doctors.png" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.Resources>
+            </ListBox>
+            <Label x:Name="labelheader" Content="List of Doctors" HorizontalContentAlignment="center" Margin="0,101,889,0" VerticalAlignment="Top" Height="53" FontSize="24" FontWeight="Bold" Foreground="White" RenderTransformOrigin="0.762,0.453" Background="#FF6B60CD" HorizontalAlignment="Right" Width="302"/>
+            <ListBox x:Name="listboxresult" Margin="393,284,131,0"  ItemTemplate="{DynamicResource contacttemplate}" Height="311" VerticalAlignment="Top">
+                <ListBox.Resources>
+                    <DataTemplate x:Key="contacttemplate">
+                        <Grid d:DesignWidth="360.5" d:DesignHeight="192.5" Height="325" Width="622">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.ColumnSpan="2" Foreground="Green" Content="{Binding DoctorName}"  HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Height="50" Width="375" FontSize="30" Background="{x:Null}" RenderTransformOrigin="0.5,0.5">
+                                <Label.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="0.018"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Label.RenderTransform>
+                            </Label>
+                            <Label Grid.ColumnSpan="2" Content="{Binding DoctorAge}" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Height="50" Width="241" FontSize="18" OpacityMask="#FFDE2A2A" Background="{x:Null}" RenderTransformOrigin="0.51,-0.054"/>
+                            <Label Grid.ColumnSpan="2" Content="{Binding DoctorEmail}" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Width="260" Height="49" OpacityMask="#FFDE2A2A" Background="{x:Null}" FontSize="18"/>
+                            <Label Grid.ColumnSpan="2" Content="{Binding DoctorQual}" HorizontalAlignment="Left" Margin="275,122,0,0" VerticalAlignment="Top" Width="216" Height="49" FontSize="18" OpacityMask="#FFDE2A2A" Background="{x:Null}"/>
+                            <Label Grid.ColumnSpan="2" Content="{Binding DoctorSpec}" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Height="44" Width="307" FontSize="18" RenderTransformOrigin="0.495,0.795" OpacityMask="#FFDE2A2A" Background="{x:Null}"/>
+                            <Label Grid.ColumnSpan="2" Content="{Binding DoctorBio}" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Height="95" Width="612" FontSize="18" OpacityMask="#FFDE2A2A" Background="{x:Null}"/>
+                            <Ellipse Width="116" Height="116" Grid.ColumnSpan="2" Margin="496,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="doctors.png" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.Resources>
+            </ListBox>
+            <Canvas HorizontalAlignment="Left" Height="96" Margin="393,190,0,0" VerticalAlignment="Top" Width="668" Background="#FF6B60CD">
+                <TextBox x:Name="textboxfilter" HorizontalAlignment="Left" Height="56" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" FontSize="20" Canvas.Left="164" Canvas.Top="25" />
+                <Label x:Name="labelfilter" VerticalContentAlignment="Center" Content="Enter Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Height="56" FontSize="20" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" Background="{x:Null}" Canvas.Left="50" Canvas.Top="25"/>
+                <Button x:Name="btnfilter" Content="Search details" FontSize="20" Click="btnfilter_Click" Height="56" VerticalAlignment="Top" Background="#FF2F8D56" BorderBrush="#FFFBFBFB" Foreground="White" HorizontalAlignment="Right" Width="130" Canvas.Left="421" Canvas.Top="25"/>
+            </Canvas>
+            <TextBox x:Name="txtdoc" HorizontalAlignment="Left" IsReadOnly="True" Height="17" Margin="1104,28,0,0" TextWrapping="Wrap" Text="{Binding ElementName=listboxnames, Path=SelectedItem.DoctorName, Mode=OneWay}" VerticalAlignment="Top" Width="15" FontSize="14" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5fc3f70d7cb24bf0b84d959924651311" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="HMDBModel.Patient" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMDBModel.PatientDisease" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="HMDBModel.FK_PatientDisease_Patients" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HMDBModel.Doctor1" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="HMDBModel.Appointment" Width="1.5" PointX="5.625" PointY="3" />
+        <AssociationConnector Association="HMDBModel.FK_Appointments_Doctor" />
+        <AssociationConnector Association="HMDBModel.FK_Appointments_Patient" />
+        <EntityTypeShape EntityType="HMDBModel.Lab" Width="1.5" PointX="8.625" PointY="3.125" />
+        <AssociationConnector Association="HMDBModel.FK_Labs_Doctor" />
+        <AssociationConnector Association="HMDBModel.FK_Labs_Patient" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HMDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="BloodGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PatientDiseases" Relationship="Self.FK_PatientDisease_Patients" FromRole="Patient" ToRole="PatientDisease" />
+    <NavigationProperty Name="Appointments" Relationship="HMDBModel.FK_Appointments_Patient" FromRole="Patient" ToRole="Appointment" />
+    <NavigationProperty Name="Labs" Relationship="HMDBModel.FK_Labs_Patient" FromRole="Patient" ToRole="Lab" />
+  </EntityType>
+  <EntityType Name="PatientDisease">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Patient_id" Type="Int32" />
+    <Property Name="Disease" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK_PatientDisease_Patients" FromRole="PatientDisease" ToRole="Patient" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_PatientDisease_Patients">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="PatientDisease" Type="Self.PatientDisease" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PatientDisease">
+        <PropertyRef Name="Patient_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HMDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="PatientDiseases" EntityType="Self.PatientDisease" />
+    <AssociationSet Name="FK_PatientDisease_Patients" Association="Self.FK_PatientDisease_Patients">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="PatientDisease" EntitySet="PatientDiseases" />
+    </AssociationSet>
+    <EntitySet Name="Doctor1" EntityType="HMDBModel.Doctor1" />
+    <EntitySet Name="Appointments" EntityType="HMDBModel.Appointment" />
+    <AssociationSet Name="FK_Appointments_Doctor" Association="HMDBModel.FK_Appointments_Doctor">
+      <End Role="Doctor1" EntitySet="Doctor1" />
+      <End Role="Appointment" EntitySet="Appointments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Appointments_Patient" Association="HMDBModel.FK_Appointments_Patient">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Appointment" EntitySet="Appointments" />
+    </AssociationSet>
+    <EntitySet Name="Labs" EntityType="HMDBModel.Lab" />
+    <AssociationSet Name="FK_Labs_Doctor" Association="HMDBModel.FK_Labs_Doctor">
+      <End Role="Doctor1" EntitySet="Doctor1" />
+      <End Role="Lab" EntitySet="Labs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Labs_Patient" Association="HMDBModel.FK_Labs_Patient">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Lab" EntitySet="Labs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Doctor1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Qualification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Biography" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Appointments" Relationship="HMDBModel.FK_Appointments_Doctor" FromRole="Doctor1" ToRole="Appointment" />
+    <NavigationProperty Name="Labs" Relationship="HMDBModel.FK_Labs_Doctor" FromRole="Doctor1" ToRole="Lab" />
+  </EntityType>
+  <EntityType Name="Appointment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="doctor_id" Type="Int32" />
+    <Property Name="patient_id" Type="Int32" />
+    <Property Name="DoctorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="appointment_date" Type="DateTime" Precision="3" />
+    <Property Name="appointment_details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Doctor" Relationship="HMDBModel.FK_Appointments_Doctor" FromRole="Appointment" ToRole="Doctor1" />
+    <NavigationProperty Name="Patient" Relationship="HMDBModel.FK_Appointments_Patient" FromRole="Appointment" ToRole="Patient" />
+  </EntityType>
+  <Association Name="FK_Appointments_Doctor">
+    <End Type="HMDBModel.Doctor1" Role="Doctor1" Multiplicity="0..1" />
+    <End Type="HMDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Appointments_Patient">
+    <End Type="HMDBModel.Patient" Role="Patient" Multiplicity="0..1" />
+    <End Type="HMDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="patient_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Lab">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="doctor_id" Type="Int32" />
+    <Property Name="patient_id" Type="Int32" />
+    <Property Name="TestType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AppointmentTime" Type="DateTime" Precision="3" />
+    <Property Name="DoctorRemarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Doctor" Relationship="HMDBModel.FK_Labs_Doctor" FromRole="Lab" ToRole="Doctor1" />
+    <NavigationProperty Name="Patient" Relationship="HMDBModel.FK_Labs_Patient" FromRole="Lab" ToRole="Patient" />
+  </EntityType>
+  <Association Name="FK_Labs_Doctor">
+    <End Type="HMDBModel.Doctor1" Role="Doctor1" Multiplicity="0..1" />
+    <End Type="HMDBModel.Lab" Role="Lab" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lab">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Labs_Patient">
+    <End Type="HMDBModel.Patient" Role="Patient" Multiplicity="0..1" />
+    <End Type="HMDBModel.Lab" Role="Lab" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lab">
+        <PropertyRef Name="patient_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
