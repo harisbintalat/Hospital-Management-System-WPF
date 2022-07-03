@@ -45,7 +45,7 @@ namespace SemesterProject
         {
             if(txtemail.Text=="" || txtpswd.Password=="")
             {
-                MessageBox.Show("Haris Chutiya hai", "Error", MessageBoxButton.OK,
+                MessageBox.Show("Fields cannot be empty", "Error", MessageBoxButton.OK,
                     MessageBoxImage.Error, MessageBoxResult.OK);
             }
             else if (loginuser(txtemail.Text, txtpswd.Password))
